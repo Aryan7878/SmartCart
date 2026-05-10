@@ -1,77 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 const Layout = ({ children }) => {
-    const [isSidebarOpen, setSidebarOpen] = useState(false);
-    const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-    // Close sidebar on route change (mobile)
-    useEffect(() => {
-        setSidebarOpen(false);
-    }, [location]);
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-primary)' }}>
+      {/* Sidebar — hidden on mobile, shown via state */}
+      <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
 
-    return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-primary)' }}>
-            {/* Mobile Sidebar Overlay */}
-            {isSidebarOpen && (
-                <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
-            )}
+      {/* Main content */}
+      <main className="main-content">
+        {/* Decorative background orbs */}
+        <div className="orb orb-purple" style={{ top: '-120px', right: '8%', opacity: 0.5, zIndex: 0 }} />
+        <div className="orb orb-indigo" style={{ bottom: '15%', left: '3%', opacity: 0.35, zIndex: 0 }} />
+        <div className="orb orb-pink"   style={{ top: '40%', right: '2%', opacity: 0.2, zIndex: 0 }} />
 
-            <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMobileOpen(true)}
+          style={{
+            display: 'none', position: 'fixed', top: '1rem', left: '1rem', zIndex: 48,
+            background: 'var(--bg-card)', border: '1px solid var(--border-subtle)',
+            borderRadius: '0.625rem', padding: '0.5rem', cursor: 'pointer',
+            color: 'var(--text-primary)', backdropFilter: 'blur(10px)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }}
+          className="mobile-menu-btn"
+        >
+          <Menu style={{ width: '1.25rem', height: '1.25rem' }} />
+        </button>
 
-            {/* Main content area */}
-            <main className="main-content" style={{ flex: 1, position: 'relative', minHeight: '100vh' }}>
-                {/* Mobile Header */}
-                <header className="mobile-header">
-                    <button onClick={() => setSidebarOpen(true)} className="icon-wrap" style={{ background: 'none', border: 'none' }}>
-                        <Menu className="w-5 h-5" />
-                    </button>
-                    <span className="text-sm font-bold gradient-text">SmartCart</span>
-                    <div style={{ width: '2.25rem' }} /> {/* Spacer */}
-                </header>
-
-                {/* Decorative background orbs */}
-                <div className="orb orb-purple" style={{ top: '-100px', right: '10%', opacity: 0.6 }} />
-                <div className="orb orb-indigo" style={{ bottom: '10%', left: '5%', opacity: 0.4 }} />
-                
-                <div style={{ position: 'relative', zIndex: 1, padding: '1rem' }} className="content-inner">
-                    {children}
-                </div>
-            </main>
-
-            <style>{`
-                .main-content {
-                    margin-left: 220px;
-                    transition: margin 0.3s ease;
-                }
-                .mobile-header {
-                    display: none;
-                }
-                @media (max-width: 1024px) {
-                    .main-content {
-                        margin-left: 0;
-                    }
-                    .mobile-header {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 0.75rem 1rem;
-                        background: rgba(13,13,26,0.8);
-                        backdrop-filter: blur(10px);
-                        position: sticky;
-                        top: 0;
-                        z-index: 40;
-                        border-bottom: 1px solid var(--border-subtle);
-                    }
-                    .content-inner {
-                        padding: 1rem !important;
-                    }
-                }
-            `}</style>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          {children}
         </div>
-    );
+      </main>
+
+      {/* Mobile hamburger visibility */}
+      <style>{`
+        @media (max-width: 768px) {
+          .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; }
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default Layout;

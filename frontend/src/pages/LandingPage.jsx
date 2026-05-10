@@ -143,7 +143,7 @@ const LandingPage = () => {
 
           {/* Hero search */}
           <form onSubmit={handleSearch} style={{ width: '100%', maxWidth: '580px' }}>
-            <div className="hero-search">
+            <div className="hero-search" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%' }}>
               <Search style={{ width: '1.1rem', height: '1.1rem', color: '#a78bfa', flexShrink: 0 }} />
               <input
                 ref={inputRef}
@@ -151,6 +151,7 @@ const LandingPage = () => {
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Search phones, laptops, headphones..."
+                style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', color: 'var(--text-primary)', fontSize: '0.95rem' }}
               />
               <button type="submit" className="btn-primary" style={{ padding: '0.6rem 1.5rem', borderRadius: '9999px', fontSize: '0.85rem', flexShrink: 0 }}>
                 Search
@@ -162,11 +163,12 @@ const LandingPage = () => {
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
             {POPULAR_SEARCHES.map(s => (
               <button key={s} onClick={() => navigate(`/search?q=${encodeURIComponent(s)}`)} style={{
-                padding: '0.3rem 0.875rem', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 600,
-                background: 'rgba(139,92,246,0.08)', border: '1px solid var(--border-subtle)',
-                color: 'var(--text-muted)', cursor: 'pointer', transition: 'all 0.2s'
+                padding: '0.35rem 1rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 600,
+                background: 'var(--bg-card)', border: '1px solid var(--border-subtle)',
+                color: 'var(--text-muted)', cursor: 'pointer', transition: 'all 0.2s',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
               }}
-              onMouseOver={e => { e.currentTarget.style.borderColor='rgba(139,92,246,0.3)'; e.currentTarget.style.color='#c4b5fd'; }}
+              onMouseOver={e => { e.currentTarget.style.borderColor='var(--accent-purple)'; e.currentTarget.style.color='var(--accent-purple)'; }}
               onMouseOut={e => { e.currentTarget.style.borderColor='var(--border-subtle)'; e.currentTarget.style.color='var(--text-muted)'; }}
               >
                 {s}

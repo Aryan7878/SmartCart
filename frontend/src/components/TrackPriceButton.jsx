@@ -63,7 +63,7 @@ const TrackPriceButton = ({ productId, currentPrice }) => {
                     onClick={() => setIsModalOpen(false)}
                     style={{
                         position: 'fixed', inset: 0, zIndex: 1000,
-                        background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)',
+                        background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem'
                     }}
                 >
@@ -87,7 +87,7 @@ const TrackPriceButton = ({ productId, currentPrice }) => {
                                     borderRadius: '0.5rem', padding: '0.375rem', cursor: 'pointer', color: 'white'
                                 }}
                             >
-                                <X className="w-4 h-4" />
+                                <X style={{ width: '1rem', height: '1rem' }} />
                             </button>
                             <BellRing style={{ width: '2rem', height: '2rem', color: 'white', marginBottom: '0.75rem', opacity: 0.9 }} />
                             <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'white', letterSpacing: '-0.02em' }}>Set Price Alert</h3>
@@ -115,25 +115,26 @@ const TrackPriceButton = ({ productId, currentPrice }) => {
                                         <label style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                             <Target style={{ width: '0.875rem', height: '0.875rem', color: '#a78bfa' }} /> Target Price (₹)
                                         </label>
-                                        <div style={{ position: 'relative' }}>
+                                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                                             <input 
                                                 type="number" 
                                                 value={targetPrice}
                                                 onChange={(e) => setTargetPrice(e.target.value)}
                                                 style={{
-                                                    width: '100%', padding: '1rem 1.25rem',
+                                                    width: '100%', padding: '1rem 3.5rem 1rem 1.25rem',
                                                     background: 'rgba(12,12,26,0.8)', border: '1px solid var(--border-subtle)',
-                                                    borderRadius: '1rem', color: 'var(--text-primary)', fontSize: '1.5rem',
-                                                    fontWeight: 900, outline: 'none', transition: 'border-color 0.2s'
+                                                    borderRadius: '1rem', color: 'var(--text-primary)', fontSize: '1.25rem',
+                                                    fontWeight: 900, outline: 'none', transition: 'border-color 0.2s',
+                                                    fontFamily: 'Inter, sans-serif'
                                                 }}
                                                 onFocus={e => e.target.style.borderColor = '#7c3aed'}
                                                 onBlur={e => e.target.style.borderColor = 'var(--border-subtle)'}
                                             />
-                                            <div style={{ position: 'absolute', right: '1.25rem', top: '50%', transform: 'translateY(-50%)', fontWeight: 800, color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                                            <div style={{ position: 'absolute', right: '1.25rem', fontWeight: 800, color: 'var(--text-muted)', fontSize: '0.75rem', pointerEvents: 'none' }}>
                                                 INR
                                             </div>
                                         </div>
-                                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontStyle: 'italic', marginTop: '0.25rem' }}>
                                             Current best is ₹{currentPrice.toLocaleString()}. We suggest {Math.round(currentPrice * 0.9).toLocaleString()}.
                                         </p>
                                     </div>

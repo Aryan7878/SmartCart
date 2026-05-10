@@ -133,16 +133,17 @@ const ProductDetailsPage = () => {
 
             {/* Image */}
             <div style={{
-              width: '220px', height: '220px', flexShrink: 0, borderRadius: 'var(--radius-lg)',
-              background: 'linear-gradient(135deg, rgba(124,58,237,0.06), rgba(99,102,241,0.04))',
+              width: '280px', height: '280px', flexShrink: 0, borderRadius: 'var(--radius-lg)',
+              background: 'var(--bg-secondary)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.25rem',
-              border: '1px solid var(--border-subtle)'
+              border: '1px solid var(--border-subtle)', overflow: 'hidden', position: 'relative'
             }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at center, var(--glow-purple) 0%, transparent 70%)', opacity: 0.6 }} />
               <img
-                src={product.image || 'https://placehold.co/400x400/0d0d1a/a78bfa?text=SmartCart'}
+                src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80'}
                 alt={product.name}
-                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                onError={e => { e.currentTarget.src = 'https://placehold.co/400x400/0d0d1a/a78bfa?text=No+Preview'; }}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.25))' }}
+                onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80'; }}
               />
             </div>
 
@@ -221,29 +222,31 @@ const ProductDetailsPage = () => {
               const style = getMpStyle(m.name);
               const isBest = m.price === bestMarketPrice;
               return (
-                <div key={i} className="mp-row" style={{ position: 'relative' }}>
-                  {isBest && (
-                    <span style={{
-                      position: 'absolute', top: '-8px', left: '12px',
-                      fontSize: '0.55rem', fontWeight: 800, textTransform: 'uppercase',
-                      background: 'rgba(16,185,129,0.2)', color: '#6ee7b7',
-                      border: '1px solid rgba(16,185,129,0.3)', borderRadius: '9999px',
-                      padding: '0.1rem 0.4rem', letterSpacing: '0.05em'
-                    }}>Best</span>
-                  )}
-                  <div>
-                    <span style={{
-                      fontSize: '0.65rem', fontWeight: 700, padding: '0.15rem 0.5rem',
-                      borderRadius: '9999px', background: style.bg, color: style.color,
-                      border: `1px solid ${style.border}`, textTransform: 'capitalize', display: 'inline-block', marginBottom: '0.25rem'
-                    }}>{m.name}</span>
-                    <p style={{ fontSize: '1rem', fontWeight: 800, color: isBest ? '#6ee7b7' : 'var(--text-primary)' }}>
+                <div key={i} className="mp-row" style={{ padding: '1.25rem 1.5rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem', flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <span style={{
+                        fontSize: '0.7rem', fontWeight: 800, padding: '0.25rem 0.75rem',
+                        borderRadius: '9999px', background: style.bg, color: style.color,
+                        border: `1px solid ${style.border}`, textTransform: 'capitalize'
+                      }}>{m.name}</span>
+                      {isBest && (
+                        <span style={{
+                          fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase',
+                          background: 'rgba(16,185,129,0.15)', color: '#10b981',
+                          border: '1px solid rgba(16,185,129,0.3)', borderRadius: '9999px',
+                          padding: '0.2rem 0.625rem', letterSpacing: '0.06em',
+                          boxShadow: '0 0 12px rgba(16,185,129,0.2)'
+                        }}>Best Price</span>
+                      )}
+                    </div>
+                    <p style={{ fontSize: '1.5rem', fontWeight: 950, color: isBest ? '#10b981' : 'var(--text-primary)', letterSpacing: '-0.03em', lineHeight: 1 }}>
                       {formatCurrency(m.price, currency)}
                     </p>
                   </div>
                   <a href={getMarketplaceSearchUrl(m.name, product.name)} target="_blank" rel="noopener noreferrer"
-                    className="btn-primary" style={{ padding: '0.45rem 1rem', borderRadius: '0.5rem', fontSize: '0.72rem', textDecoration: 'none' }}>
-                    Buy <ExternalLink style={{ width: '0.7rem', height: '0.7rem' }} />
+                    className="btn-primary" style={{ padding: '0.75rem 1.5rem', borderRadius: '0.875rem', fontSize: '0.85rem', textDecoration: 'none' }}>
+                    Buy <ExternalLink style={{ width: '1rem', height: '1rem' }} />
                   </a>
                 </div>
               );

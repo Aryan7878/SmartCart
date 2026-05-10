@@ -13,9 +13,9 @@ if (!MONGO_URI) {
 
 const UNSPLASH_BY_CATEGORY = {
   Phones: [
+    "photo-1592899677977-9c10ca588bbd",
     "photo-1511707171634-5f897ff02aa9",
-    "photo-1510552776732-03e61cf4b144",
-    "photo-1598327105666-5b89351aff97",
+    "photo-1616348436168-de43ad0db179",
   ],
   Laptops: [
     "photo-1517336714731-489689fd1ca8",
@@ -97,7 +97,7 @@ const sanitizeSeedProduct = (p) => {
 
   return {
     ...p,
-    image: makeUnsplashImageUrl(list[idx]),
+    image: p.image || makeUnsplashImageUrl(list[idx]),
     marketplaces,
   };
 };
@@ -138,7 +138,7 @@ const seedProducts = [
     description: "The ultimate iPhone with aerospace-grade titanium design and A17 Pro chip.",
     price: 159900,
     stock: 120,
-    image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&q=80",
+    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/h/d/9/-original-imagtc2qzgnnuhhy.jpeg",
     marketplaces: [
       { name: "Amazon", price: 156900, url: "https://amazon.in/dp/B0CHX1W1XY" },
       { name: "Flipkart", price: 159900, url: "https://flipkart.com/apple-iphone-15-pro-max" },
@@ -152,7 +152,7 @@ const seedProducts = [
     description: "AI-powered flagship with Titanium frame and 200MP camera.",
     price: 129999,
     stock: 85,
-    image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&q=80",
+    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/5/i/7/-original-imagx9egm9mg8tv4.jpeg",
     marketplaces: [
       { name: "Amazon", price: 129999, url: "https://amazon.in/dp/B0CSD875F1" },
       { name: "Samsung Store", price: 129999, url: "https://samsung.com/in/smartphones/galaxy-s24-ultra" }
@@ -165,10 +165,62 @@ const seedProducts = [
     description: "Incredible camera and the best AI features directly from Google.",
     price: 106999,
     stock: 45,
-    image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&q=80",
+    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/m/h/k/-original-imagv6f3mshzcy9e.jpeg",
     marketplaces: [
       { name: "Flipkart", price: 104999, url: "https://flipkart.com/google-pixel-8-pro" },
       { name: "Amazon", price: 106999, url: "https://amazon.in/dp/B0CGTV27K7" }
+    ]
+  },
+  {
+    name: "OnePlus 12 5G",
+    brand: "OnePlus",
+    category: "Phones",
+    description: "Smooth beyond belief. Snapdragon 8 Gen 3 and Hasselblad Camera.",
+    price: 64999,
+    stock: 150,
+    image: "https://m.media-amazon.com/images/I/717S8S6B0ML.jpg",
+    marketplaces: [
+      { name: "Amazon", price: 63999, url: "https://amazon.in/dp/B0CQPCM1BD" },
+      { name: "OnePlus Store", price: 64999, url: "https://oneplus.in/oneplus-12" }
+    ]
+  },
+  {
+    name: "Nothing Phone (2)",
+    brand: "Nothing",
+    category: "Phones",
+    description: "Come to the bright side. Glyph Interface and Nothing OS 2.0.",
+    price: 39999,
+    stock: 100,
+    image: "https://m.media-amazon.com/images/I/7187qC4iC6L.jpg",
+    marketplaces: [
+      { name: "Flipkart", price: 38999, url: "https://flipkart.com/nothing-phone-2" },
+      { name: "Amazon", price: 39999, url: "https://amazon.in/dp/B0C7QS6M27" }
+    ]
+  },
+  {
+    name: "Sony WH-1000XM5",
+    brand: "Sony",
+    category: "Audio",
+    description: "Industry-leading noise cancellation overhead headphones.",
+    price: 29990,
+    stock: 320,
+    image: "https://m.media-amazon.com/images/I/51v4694N9PL.jpg",
+    marketplaces: [
+      { name: "Amazon", price: 26990, url: "https://amazon.in/dp/B09XS7JWHH" },
+      { name: "Croma", price: 28990, url: "https://croma.com/sony-wh-1000xm5" }
+    ]
+  },
+  {
+    name: "PlayStation 5 Console (Disc Edition)",
+    brand: "Sony",
+    category: "Gaming",
+    description: "Experience lightning-fast loading with an ultra-high-speed SSD.",
+    price: 54990,
+    stock: 150,
+    image: "https://m.media-amazon.com/images/I/5105TndfbcL.jpg",
+    marketplaces: [
+      { name: "Amazon", price: 54990, url: "https://amazon.in/dp/B08FV5GC28" },
+      { name: "Flipkart", price: 53990, url: "https://flipkart.com/sony-playstation-5" }
     ]
   },
   {
@@ -270,7 +322,7 @@ const seedProducts = [
     description: "Mind-blowing performance with the M3 Max chip and 36GB RAM.",
     price: 349900,
     stock: 30,
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&q=80",
+    image: "https://m.media-amazon.com/images/I/618d5bS2lUL._AC_SL1500_.jpg",
     marketplaces: [
       { name: "Apple Store", price: 349900, url: "https://apple.com/in/shop/buy-mac/macbook-pro/16-inch" },
       { name: "Amazon", price: 345000, url: "https://amazon.in/dp/B0CM5KHQXX" }
@@ -400,7 +452,7 @@ const seedProducts = [
     description: "Industry-leading noise cancellation overhead headphones.",
     price: 29990,
     stock: 320,
-    image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&q=80",
+    image: "https://m.media-amazon.com/images/I/61f1YfTkTDL._AC_SL1500_.jpg",
     marketplaces: [
       { name: "Amazon", price: 26990, url: "https://amazon.in/dp/B09XS7JWHH" },
       { name: "Croma", price: 28990, url: "https://croma.com/sony-wh-1000xm5" }
@@ -656,7 +708,7 @@ const seedProducts = [
     description: "Rugged and capable, built for endurance athletes.",
     price: 89900,
     stock: 65,
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/a/u/l/watch-ultra-2-apple-original-imagsf882.jpeg",
     marketplaces: [
       { name: "Amazon", price: 87900, url: "https://amazon.in/dp/B0CHX8W1XY" },
       { name: "Apple Store", price: 89900, url: "https://apple.com/in/watch" }

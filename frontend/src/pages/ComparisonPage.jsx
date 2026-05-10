@@ -119,11 +119,12 @@ const ComparisonPage = () => {
                                     </button>
 
                                     {/* Image Section */}
-                                    <div style={{ height: '200px', padding: '2rem', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div style={{ height: '200px', padding: '2rem', background: 'linear-gradient(135deg, rgba(124,58,237,0.06), rgba(99,102,241,0.04))', display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid var(--border-subtle)' }}>
                                         <img 
                                             src={item.image || item.imageUrl || `https://via.placeholder.com/300?text=P`} 
                                             alt={item.name}
                                             style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
+                                            onError={e => { e.currentTarget.src = 'https://placehold.co/400x400/0d0d1a/a78bfa?text=No+Preview'; }}
                                         />
                                         <div style={{ position: 'absolute', bottom: '0.75rem', left: '1rem' }}>
                                             <BuyBadge rec={intel?.analytics?.buyRecommendation || 'monitor'} />
