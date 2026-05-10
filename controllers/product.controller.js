@@ -114,7 +114,7 @@ export const analyzeProduct = asyncHandler(async (req, res) => {
     const analytics = await Analytics.findOneAndUpdate(
         { productId },
         analyticsPayload,
-        { new: true, upsert: true }
+        { new: true, upsert: true, returnDocument: 'after' }
     );
 
     // ── 6. Return combined payload ────────────────────────────────────────────

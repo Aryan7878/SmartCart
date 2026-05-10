@@ -79,28 +79,20 @@ const SearchResultsPage = () => {
             {/* Search Input Area */}
             <form
                 onSubmit={(e) => { e.preventDefault(); setSearchParams({ q: inputValue }); }}
-                style={{
-                    display: 'flex', gap: '0.75rem', background: 'rgba(22,22,48,0.7)',
-                    border: '1px solid var(--border-subtle)', borderRadius: '1.25rem',
-                    padding: '0.625rem 0.625rem 0.625rem 1.25rem', maxWidth: '600px'
-                }}
                 className="animate-fade-up"
+                style={{ maxWidth: '640px' }}
             >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1 }}>
-                    <Search style={{ width: '1.1rem', height: '1.1rem', color: '#a78bfa', flexShrink: 0 }} />
+                <div className="hero-search">
+                    <Search style={{ width: '1rem', height: '1rem', color: '#a78bfa', flexShrink: 0 }} />
                     <input
                         type="text" value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="Search for models, brands, or categories..."
-                        style={{
-                            background: 'transparent', border: 'none', outline: 'none', flex: 1,
-                            color: 'var(--text-primary)', fontSize: '0.9rem', fontWeight: 500
-                        }}
+                        placeholder="Search phones, laptops, headphones..."
                     />
+                    <button type="submit" className="btn-primary" style={{ padding: '0.55rem 1.5rem', borderRadius: '9999px', fontSize: '0.85rem', flexShrink: 0 }}>
+                        {loading ? <Loader2 style={{ width: '1rem', height: '1rem' }} className="animate-spin" /> : 'Search'}
+                    </button>
                 </div>
-                <button type="submit" className="btn-primary" style={{ padding: '0.65rem 1.5rem', borderRadius: '0.875rem', fontSize: '0.85rem' }}>
-                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Search'}
-                </button>
             </form>
 
             <div style={{ display: 'grid', gridTemplateColumns: queryFromUrl ? '240px 1fr' : '1fr', gap: '2rem', alignItems: 'start' }}>

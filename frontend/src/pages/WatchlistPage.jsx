@@ -150,7 +150,7 @@ const WatchlistPage = () => {
                         const pct = item.initialPrice > 0 ? ((priceDiff / item.initialPrice) * 100).toFixed(0) : 0;
 
                         return (
-                            <div key={item._id} className="glass-card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                            <div key={item._id} className="glass-card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative' }}>
                                 {/* Image & Info */}
                                 <div style={{ padding: '1.25rem', display: 'flex', gap: '1rem', borderBottom: '1px solid var(--border-subtle)' }}>
                                     <div style={{
@@ -158,7 +158,7 @@ const WatchlistPage = () => {
                                         background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem'
                                     }}>
                                         <img
-                                            src={item.product?.image || `https://via.placeholder.com/100?text=P`}
+                                            src={item.product?.image || 'https://placehold.co/100x100/0d0d1a/a78bfa?text=SC'}
                                             alt={item.product?.name}
                                             style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
                                         />

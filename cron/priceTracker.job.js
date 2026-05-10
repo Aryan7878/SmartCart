@@ -66,7 +66,7 @@ export const runPriceTracker = async () => {
                             bestBuyDate: bestBuyInfo.bestBuyDate,
                             dropProbability: dropProbInfo.dropProbability,
                         },
-                        { new: true, upsert: true }
+                        { new: true, upsert: true, returnDocument: 'after' }
                     );
                     console.log(`[Cron] Extracted node & computed analytics for ${product.name}`);
                 }

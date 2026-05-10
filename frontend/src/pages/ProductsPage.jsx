@@ -151,16 +151,8 @@ const ProductsPage = () => {
                 {/* Category chips */}
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                     {CATEGORIES.map(cat => (
-                        <button key={cat} onClick={() => setCategory(cat)} style={{
-                            padding: '0.45rem 0.875rem', borderRadius: '9999px', fontSize: '0.8rem', fontWeight: 600,
-                            cursor: 'pointer', transition: 'all 0.2s',
-                            background: category === cat
-                                ? 'linear-gradient(135deg, #7c3aed, #6366f1)'
-                                : 'rgba(22,22,48,0.7)',
-                            border: category === cat ? '1px solid transparent' : '1px solid var(--border-subtle)',
-                            color: category === cat ? 'white' : 'var(--text-secondary)',
-                            boxShadow: category === cat ? '0 4px 12px rgba(124,58,237,0.3)' : 'none'
-                        }}>
+                        <button key={cat} onClick={() => setCategory(cat)}
+                            className={`category-pill${category === cat ? ' active' : ''}`}>
                             {cat}
                         </button>
                     ))}
