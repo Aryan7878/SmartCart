@@ -63,3 +63,6 @@ npm run dev:all
 
 ## 📄 License
 MIT
+
+## Deployed Site
+https://smartcart-t7jw.onrender.com/
