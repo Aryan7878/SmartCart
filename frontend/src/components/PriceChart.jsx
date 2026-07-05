@@ -21,7 +21,7 @@ const PriceChart = ({ history, forecast7Day, forecast30Day }) => {
 
     if (!history || history.length === 0) {
         return (
-            <div className="flex h-full items-center justify-center text-gray-500 dark:text-gray-400">
+            <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '0.875rem', fontWeight: 600 }}>
                 No historical data available.
             </div>
         );
@@ -77,21 +77,24 @@ const PriceChart = ({ history, forecast7Day, forecast30Day }) => {
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
             return (
-                <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700/60 backdrop-blur-sm dark:bg-gray-800/90 transition-all">
-                    <p className="font-semibold text-gray-800 dark:text-gray-200 mb-3 text-sm">{label}</p>
-                    <div className="space-y-2">
-                        {payload.map((entry, index) => (
-                            <div key={index} className="flex items-center text-sm justify-between gap-4">
-                                <div className="flex items-center">
-                                    <span
-                                        className="w-2.5 h-2.5 rounded-full mr-2"
-                                        style={{ backgroundColor: entry.color }}
-                                    ></span>
-                                    <span className="text-gray-600 dark:text-gray-400">
-                                        {entry.name}
-                                    </span>
+                <div style={{
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border-medium)',
+                    borderRadius: '0.875rem',
+                    padding: '0.875rem 1.125rem',
+                    boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+                    backdropFilter: 'blur(16px)',
+                    minWidth: '160px'
+                }}>
+                    <p style={{ fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.625rem', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{label}</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                        {payload.map((entry, index) => entry.value != null && (
+                            <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: entry.color, display: 'inline-block', flexShrink: 0 }} />
+                                    <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 600 }}>{entry.name}</span>
                                 </div>
-                                <span className="font-bold text-gray-900 dark:text-white">
+                                <span style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.85rem' }}>
                                     {formatCurrency(entry.value, currency)}
                                 </span>
                             </div>

@@ -100,7 +100,8 @@ const ProductDetailsPage = () => {
   const avgPrice       = prices.length > 0 ? prices.reduce((a, b) => a + b, 0) / prices.length : product.price;
   const lowestPrice    = prices.length > 0 ? Math.min(...prices) : product.price;
   const highestPrice   = prices.length > 0 ? Math.max(...prices) : product.price;
-  const currentPrice   = product.price || product.marketplaces?.[0]?.price || 0;
+  // Prefer live currentPrice from PriceHistory over stale product.price
+  const currentPrice   = product.currentPrice || product.price || product.marketplaces?.[0]?.price || 0;
   const priceDiffPct   = avgPrice > 0 ? ((currentPrice - avgPrice) / avgPrice) * 100 : 0;
   const isDiscounted   = priceDiffPct < 0;
   const bestMp         = product.marketplaces?.reduce((a, b) => (a.price < b.price ? a : b), product.marketplaces[0] || {});
@@ -217,36 +218,57 @@ const ProductDetailsPage = () => {
             <ShoppingCart style={{ width: '1rem', height: '1rem', color: '#7c3aed' }} />
             Buy Now
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {product.marketplaces?.map((m, i) => {
               const style = getMpStyle(m.name);
               const isBest = m.price === bestMarketPrice;
               return (
-                <div key={i} className="mp-row" style={{ padding: '1.25rem 1.5rem' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem', flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div key={i} style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '1rem 1.25rem', borderRadius: 'var(--radius-md)',
+                  background: isBest ? 'rgba(16,185,129,0.06)' : 'var(--bg-card)',
+                  border: isBest ? '1px solid rgba(16,185,129,0.25)' : '1px solid var(--border-subtle)',
+                  transition: 'all 0.25s', gap: '1rem'
+                }}>
+                  {/* Left: badge + price */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                       <span style={{
-                        fontSize: '0.7rem', fontWeight: 800, padding: '0.25rem 0.75rem',
+                        fontSize: '0.68rem', fontWeight: 800, padding: '0.2rem 0.6rem',
                         borderRadius: '9999px', background: style.bg, color: style.color,
-                        border: `1px solid ${style.border}`, textTransform: 'capitalize'
+                        border: `1px solid ${style.border}`, textTransform: 'capitalize',
+                        whiteSpace: 'nowrap'
                       }}>{m.name}</span>
                       {isBest && (
                         <span style={{
-                          fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase',
+                          fontSize: '0.58rem', fontWeight: 900, textTransform: 'uppercase',
                           background: 'rgba(16,185,129,0.15)', color: '#10b981',
                           border: '1px solid rgba(16,185,129,0.3)', borderRadius: '9999px',
-                          padding: '0.2rem 0.625rem', letterSpacing: '0.06em',
-                          boxShadow: '0 0 12px rgba(16,185,129,0.2)'
-                        }}>Best Price</span>
+                          padding: '0.18rem 0.5rem', letterSpacing: '0.06em', whiteSpace: 'nowrap'
+                        }}>✓ Best</span>
                       )}
                     </div>
-                    <p style={{ fontSize: '1.5rem', fontWeight: 950, color: isBest ? '#10b981' : 'var(--text-primary)', letterSpacing: '-0.03em', lineHeight: 1 }}>
+                    <p style={{
+                      fontSize: '1.375rem', fontWeight: 900,
+                      color: isBest ? '#10b981' : 'var(--text-primary)',
+                      letterSpacing: '-0.03em', lineHeight: 1
+                    }}>
                       {formatCurrency(m.price, currency)}
                     </p>
                   </div>
-                  <a href={getMarketplaceSearchUrl(m.name, product.name)} target="_blank" rel="noopener noreferrer"
-                    className="btn-primary" style={{ padding: '0.75rem 1.5rem', borderRadius: '0.875rem', fontSize: '0.85rem', textDecoration: 'none' }}>
-                    Buy <ExternalLink style={{ width: '1rem', height: '1rem' }} />
+                  {/* Right: Buy button */}
+                  <a
+                    href={getMarketplaceSearchUrl(m.name, product.name)}
+                    target="_blank" rel="noopener noreferrer"
+                    className="btn-primary"
+                    style={{
+                      padding: '0.6rem 1.25rem', borderRadius: '0.75rem',
+                      fontSize: '0.8rem', textDecoration: 'none',
+                      display: 'inline-flex', alignItems: 'center', gap: '0.375rem',
+                      flexShrink: 0, whiteSpace: 'nowrap'
+                    }}
+                  >
+                    Buy <ExternalLink style={{ width: '0.85rem', height: '0.85rem' }} />
                   </a>
                 </div>
               );

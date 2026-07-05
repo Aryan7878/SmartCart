@@ -36,11 +36,18 @@ const ProductCard = ({ product }) => {
   const productId = product?._id || product?.id;
   const isComparing = compareItems.find(item => (item?._id || item?.id) === productId);
 
-  const prices = product.marketplaces?.map(m => m.price).filter(Boolean) || [];
-  const bestPrice = prices.length > 0 ? Math.min(...prices) : (product.currentPrice || product.price || 0);
-  const worstPrice = prices.length > 1 ? Math.max(...prices) : bestPrice;
-  const savings = worstPrice > bestPrice ? worstPrice - bestPrice : 0;
-  const savingsPct = worstPrice > 0 && savings > 0 ? Math.round((savings / worstPrice) * 100) : 0;
+  // currentPrice = live price from PriceHistory aggregation (most accurate)
+  // marketplace prices = static prices stored at product creation time (supplementary)
+  const currentPrice = product.currentPrice ?? product.price ?? 0;
+  const marketplacePrices = product.marketplaces?.map(m => m.price).filter(p => p > 0) || [];
+
+  // Best Price headline always uses the live currentPrice
+  const bestPrice = currentPrice > 0 ? currentPrice : (marketplacePrices.length > 0 ? Math.min(...marketplacePrices) : 0);
+
+  // Savings = difference between highest marketplace price and bestPrice (shows max potential saving)
+  const maxMarketplacePrice = marketplacePrices.length > 0 ? Math.max(...marketplacePrices) : 0;
+  const savings = maxMarketplacePrice > bestPrice && bestPrice > 0 ? maxMarketplacePrice - bestPrice : 0;
+  const savingsPct = maxMarketplacePrice > 0 && savings > 0 ? Math.round((savings / maxMarketplacePrice) * 100) : 0;
 
   const isGreatDeal = product.analytics?.realDiscount > 10 || savingsPct > 8;
   const isDropping  = product.analytics?.trendScore < 0;
@@ -52,7 +59,7 @@ const ProductCard = ({ product }) => {
     isComparing ? removeFromCompare(productId) : addToCompare(product);
   };
 
-  const fallback = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png';
+  const fallback = 'https://placehold.co/400x400/1a1a2e/a78bfa?text=No+Image';
 
   return (
     <div className="product-card">
@@ -69,7 +76,7 @@ const ProductCard = ({ product }) => {
           src={product.image || product.imageUrl || fallback}
           alt={product.name}
           className="card-img"
-          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.2))' }}
+          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', position: 'relative', zIndex: 1 }}
           onError={(e) => { e.target.onerror = null; e.target.src = fallback; }}
         />
 
@@ -143,7 +150,9 @@ const ProductCard = ({ product }) => {
           <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.625rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
             {product.marketplaces.slice(0, 2).map((m, i) => {
               const style = getMarketplaceStyle(m.name);
-              const isBest = m.price === bestPrice;
+              // Highlight the marketplace with the lowest price among all marketplaces
+              const lowestMpPrice = marketplacePrices.length > 0 ? Math.min(...marketplacePrices) : null;
+              const isBest = lowestMpPrice !== null && m.price === lowestMpPrice;
               return (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{

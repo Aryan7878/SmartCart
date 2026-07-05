@@ -17,13 +17,13 @@ const IMAGE_MAP = {
   "OnePlus 12":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/OnePlus_12.png/440px-OnePlus_12.png",
   "Nothing Phone (2)":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Nothing_phone_2.jpg/440px-Nothing_phone_2.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Nothing_Phone_2_back.png/440px-Nothing_Phone_2_back.png",
   "Google Pixel 7a":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Google_Pixel_7a.png/440px-Google_Pixel_7a.png",
   "Samsung Galaxy A54":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Samsung_Galaxy_A54.jpg/440px-Samsung_Galaxy_A54.jpg",
   "iPhone 15":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/IPhone_15_back.png/440px-IPhone_15_back.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/IPhone_15_Pro_Max_back.png/440px-IPhone_15_Pro_Max_back.png",
   "Samsung Galaxy Z Fold 5":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Samsung_Galaxy_Z_Fold5.png/440px-Samsung_Galaxy_Z_Fold5.png",
   "iPhone 13":
