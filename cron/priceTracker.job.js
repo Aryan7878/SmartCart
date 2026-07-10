@@ -25,8 +25,22 @@ export const runPriceTracker = async () => {
             const match = scrapedResults.find(r => r.name.toLowerCase() === product.name.toLowerCase()) || scrapedResults[0];
             
             if (match && match.marketplaces && match.marketplaces.length > 0) {
-                // Keep the live Product marketplaces array up-to-date
-                product.marketplaces = match.marketplaces;
+                // Merge scraped marketplaces with the existing marketplaces to prevent losing data
+                const updatedMarketplaces = [...product.marketplaces];
+                for (const newMp of match.marketplaces) {
+                    const existingIdx = updatedMarketplaces.findIndex(m => m.name.toLowerCase() === newMp.name.toLowerCase());
+                    if (existingIdx > -1) {
+                        // Update existing marketplace price and URL
+                        updatedMarketplaces[existingIdx].price = newMp.price;
+                        if (newMp.url) {
+                            updatedMarketplaces[existingIdx].url = newMp.url;
+                        }
+                    } else {
+                        // Add new marketplace
+                        updatedMarketplaces.push(newMp);
+                    }
+                }
+                product.marketplaces = updatedMarketplaces;
                 await product.save();
 
                 // 2. Store individual snapshots in PriceHistory for regression points

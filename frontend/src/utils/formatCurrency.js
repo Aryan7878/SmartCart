@@ -23,7 +23,7 @@ export const formatCurrency = (amount, currency = 'INR') => {
         displayAmount = amount / 83.0; // Mock conversion rate
     }
 
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat(currency === 'USD' ? 'en-US' : 'en-IN', {
         style: 'currency',
         currency: currency,
         maximumFractionDigits: 2,
